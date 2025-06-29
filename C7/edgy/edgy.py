@@ -20,11 +20,13 @@ def gpio_clear_events(pinNo, events):
     machine.mem32[intrAddr] = events << (4 * (pinNo % 8))
 
 pin=Pin(22,Pin.IN,Pin.PULL_UP)
-while True:    
-    event=gpio_get_events(22)
-    if(event & Pin.IRQ_FALLING):
-        print("falling")
-    if(event & Pin.IRQ_RISING):
-        print("rising")
-    gpio_clear_events(22, Pin.IRQ_FALLING | Pin.IRQ_RISING)
-    sleep(0.5)
+
+print("Press Button")
+gpio_clear_events(22, Pin.IRQ_FALLING)
+sleep(10)
+event = gpio_get_events(22)
+gpio_clear_events(22, Pin.IRQ_FALLING)
+if event & Pin.IRQ_FALLING:
+    print("Button Pressed")
+else:
+    print("Button Not Pressed")
