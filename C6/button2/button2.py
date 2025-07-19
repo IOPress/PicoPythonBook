@@ -1,7 +1,7 @@
 from machine import Pin
 import time
 pinIn = Pin(22, Pin.IN,Pin.PULL_UP)
-pinLED = Pin(25, Pin.OUT)
+pinLED = Pin("LED", Pin.OUT)
 
 while True:
     while pinIn.value()==1:
