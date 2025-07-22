@@ -1,8 +1,8 @@
 import network
-import socket
 from machine import Pin, Timer
 from time import sleep_ms
 import rp2
+import urequests
 
 def setup(country, ssid, key):
     rp2.country(country)
@@ -19,6 +19,7 @@ def setup(country, ssid, key):
     s=0
     while timeout>0:
         s=wifi.status()
+        print(s)
         if s==3 or s<0:
             break
         sleep_ms(100)
@@ -32,13 +33,32 @@ def setup(country, ssid, key):
         LED.high()
     return wifi
 
-wifi=setup("country", "ssid", "password")
+wifi = setup("country", "ssid", "password")
 print("Connected")
-ai = socket.getaddrinfo("www.example.com", 80,socket.AF_INET)
-addr = ai[0][-1]
-s = socket.socket(socket.AF_INET)
-s.connect(addr)
 
-request = b"GET /index.html HTTP/1.1\r\nHost:example.org\r\n\r\n"
-s.send(request)
-print(s.recv(512).decode("utf-8"))
+url = "http://192.168.253.45:8080"
+r = urequests.get(url)
+print(r.content)
+r.close()
+
+buf = b'Hello World'
+r = urequests.post(url,data = buf)
+print(r.content)
+r.close()
+
+r = urequests.put(url,data = buf)
+print(r.content)
+r.close()
+
+r = urequests.patch(url,data = buf)
+print(r.content)
+r.close()
+
+r=urequests.head(url)
+print(r.content)
+print(r.headers)
+r.close()
+
+r=urequests.delete(url,data = buf)
+print(r.content)
+r.close()

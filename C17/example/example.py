@@ -1,7 +1,6 @@
 import network
 from machine import Pin, Timer
 from time import sleep_ms
-import urequests
 import rp2
 
 def setup(country, ssid, key):
@@ -35,7 +34,4 @@ def setup(country, ssid, key):
 
 wifi=setup("country", "ssid", "password")
 print("Connected")
-
-r = urequests.get("http://www.example.com")
-print(r.content.decode("utf-8"))
-r.close()
+print(wifi.status('rssi'))
