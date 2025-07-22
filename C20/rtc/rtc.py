@@ -31,7 +31,7 @@ def setup(country, ssid, key):
         timer.deinit()
         LED.high()
     return wifi
-wifi=setup(country, ssid, key)
+wifi=setup("GB", "dlink3", "hawkhawk")
 print("Connected")
 print(wifi.ifconfig())
 
